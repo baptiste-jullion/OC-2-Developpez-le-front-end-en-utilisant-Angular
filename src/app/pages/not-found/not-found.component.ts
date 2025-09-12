@@ -12,7 +12,7 @@ export class NotFoundComponent implements OnInit {
   ngOnInit(): void {
 
     console.log("Page not found");
-  
+
   }
 
 }
