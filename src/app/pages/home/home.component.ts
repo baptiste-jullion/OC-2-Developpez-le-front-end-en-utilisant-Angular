@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { Olympic } from "~/models/Olympic";
@@ -7,7 +8,7 @@ import { OlympicService } from "~/services/olympic.service";
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  standalone: false
+  imports: [CommonModule]
 })
 export class HomeComponent implements OnInit {
   public olympics$: Observable<Olympic[] | null> = of(null);

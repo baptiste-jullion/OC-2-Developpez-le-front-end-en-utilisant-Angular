@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from "@angular/core";
+import { RouterModule } from "@angular/router";
 import { take } from "rxjs";
 import { OlympicService } from "~/services/olympic.service";
 
@@ -6,7 +7,7 @@ import { OlympicService } from "~/services/olympic.service";
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  standalone: false
+  imports: [RouterModule]
 })
 export class AppComponent implements OnInit {
   private olympicService = inject(OlympicService);
