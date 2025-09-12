@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { Olympic } from "~/models/Olympic";
 import { OlympicService } from "~/services/olympic.service";
@@ -12,7 +12,7 @@ import { OlympicService } from "~/services/olympic.service";
 export class HomeComponent implements OnInit {
   public olympics$: Observable<Olympic[] | null> = of(null);
 
-  constructor(private olympicService: OlympicService) {}
+  private olympicService = inject(OlympicService);
 
   ngOnInit(): void {
 
