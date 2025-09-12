@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { Olympic } from "~/models/Olympic";
 import { OlympicService } from "~/services/olympic.service";
 
 @Component({
@@ -9,7 +10,7 @@ import { OlympicService } from "~/services/olympic.service";
   standalone: false
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+  public olympics$: Observable<Olympic[] | null> = of(null);
 
   constructor(private olympicService: OlympicService) {}
 
