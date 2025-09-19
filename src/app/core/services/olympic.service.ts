@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { catchError, tap } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { Olympic } from "~/models/Olympic";
 
 @Injectable({
@@ -19,7 +19,6 @@ export class OlympicService {
       catchError((error, caught) => {
         // TODO: improve error handling
         console.error(error);
-        // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next(null);
         return caught;
       })
@@ -28,5 +27,11 @@ export class OlympicService {
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getOlympicById(id: Olympic["id"]) {
+    return this.olympics$.asObservable().pipe(
+      map((olympics) => olympics?.find((olympic) => olympic.id === id) || null)
+    );
   }
 }
