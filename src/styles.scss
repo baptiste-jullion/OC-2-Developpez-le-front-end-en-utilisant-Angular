@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+:root {
+  --color-teal: #04838f;
+}
+
+.apexcharts-tooltip {
+  background: var(--color-teal) !important;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem !important;
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
