@@ -1,0 +1,20 @@
+::ng-deep .apexcharts-pie-area {
+	transition: transform 150ms ease, opacity 150ms ease;
+	transform-origin: center center;
+}
+
+::ng-deep .apexcharts-pie-area:hover {
+	transform: scale(1.04);
+}
+
+::ng-deep .apexcharts-tooltip {
+  background: var(--color-teal) !important;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem !important;
+}
+
+::ng-deep .apexcharts-tooltip .country-name {
+	font-weight: 600;
+  margin-bottom: 8px;
+}
