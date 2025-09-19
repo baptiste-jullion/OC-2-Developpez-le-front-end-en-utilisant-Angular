@@ -11,15 +11,3 @@ body {
 :root {
   --color-teal: #04838f;
 }
-
-.apexcharts-tooltip {
-  background: var(--color-teal) !important;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem !important;
-
-  p {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-}
