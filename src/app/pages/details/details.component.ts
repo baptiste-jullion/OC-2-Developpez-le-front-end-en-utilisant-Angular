@@ -1,51 +1,36 @@
-import { Component, ViewChild } from "@angular/core";
-
-import { ApexNonAxisChartSeries, ApexChart, ApexResponsive, NgApexchartsModule, ChartComponent, } from "ng-apexcharts";
-
-interface ChartOptions {
-  series: ApexNonAxisChartSeries;
-  chart: ApexChart;
-  responsive: ApexResponsive[];
-  labels: string[];
-}
+import { Component, inject } from "@angular/core";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { OlympicLineChartComponent } from "~/components/olympic-line-chart/olympic-line-chart.component";
+import { Olympic } from "~/models/Olympic";
+import { OlympicService } from "~/services/olympic.service";
 
 @Component({
   selector: "app-details",
   templateUrl: "./details.component.html",
-  imports: [NgApexchartsModule]
+  imports: [OlympicLineChartComponent, RouterLink]
 })
 export class DetailsComponent {
-  @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: ChartOptions;
+  countryId: number;
+  olympic: Olympic | null = null;
+  entries = 0;
+  totalMedals = 0;
+  totalAthletes = 0;
+
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private olympicService = inject(OlympicService);
 
   constructor() {
-    this.chartOptions = {
-      series: [44, 55, 13, 43, 22],
-      chart: {
-        type: "pie",
-        width: 600,
-        height: 400,
-        events: {
-          selection(chart, options) {
-            console.log(chart, options);
-          },
-        },
-      },
-      labels: ["Apples", "Bananas", "Cherries", "Oranges", "Grapes"],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 300,
-            },
-            legend: {
-              position: "bottom",
-            },
-          },
-        },
-      ],
-    };
+    this.countryId = Number(this.route.snapshot.paramMap.get("countryId") || -1);
+    this.olympicService.getOlympicById(this.countryId).subscribe((olympic) => {
+      if (!olympic) {
+        this.router.navigate(["/not-found"]);
+        return;
+      }
+      this.olympic = olympic;
+      this.entries = olympic.participations.length;
+      this.totalMedals = olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0);
+      this.totalAthletes = olympic.participations.reduce((acc, participation) => acc + participation.athleteCount, 0);
+    });
   }
-
 }

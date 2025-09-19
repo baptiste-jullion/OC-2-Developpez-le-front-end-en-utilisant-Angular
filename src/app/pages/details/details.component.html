@@ -1,1 +1,32 @@
-Details
+<a routerLink="">Go back</a>
+
+<header>
+  <h1>
+    {{ olympic?.country }}
+  </h1>
+</header>
+
+<section class="boxes-container">
+  <div class="box">
+    <h2>Number of entries</h2>
+    <p>{{ entries }}</p>
+  </div>
+  <div class="box">
+    <h2>Total number of medals</h2>
+    <p>
+      {{ totalMedals }}
+    </p>
+  </div>
+  <div class="box">
+    <h2>Total number of athletes</h2>
+    <p>
+      {{ totalAthletes }}
+    </p>
+  </div>
+</section>
+
+@if (olympic) {
+<div class="chart-container">
+  <app-olympic-line-chart [olympic]="olympic"></app-olympic-line-chart>
+</div>
+}
