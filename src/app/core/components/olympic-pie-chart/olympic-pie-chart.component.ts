@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild, OnChanges, inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { ApexChart, ApexDataLabels, ApexLegend, ApexNonAxisChartSeries, ApexTooltip, ChartComponent, NgApexchartsModule } from "ng-apexcharts";
+import { ApexChart, ApexDataLabels, ApexLegend, ApexNonAxisChartSeries, ApexResponsive, ApexTooltip, ChartComponent, NgApexchartsModule } from "ng-apexcharts";
 import { Olympic } from "~/models/Olympic";
 
 interface PieChartOptions {
@@ -10,6 +10,7 @@ interface PieChartOptions {
   labels: string[];
   dataLabels: ApexDataLabels;
   tooltip: ApexTooltip;
+  responsive: ApexResponsive[];
 }
 
 @Component({
@@ -62,7 +63,25 @@ export class OlympicPieChartComponent implements OnInit, OnChanges {
             </div>
           `;
         },
-      }
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 300
+            }
+          }
+        },
+        {
+          breakpoint: 350,
+          options: {
+            chart: {
+              width: 250
+            }
+          }
+        }
+      ]
     };
   }
 
