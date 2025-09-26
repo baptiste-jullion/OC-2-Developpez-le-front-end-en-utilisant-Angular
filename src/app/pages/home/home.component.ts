@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
-import { Observable, of, tap } from "rxjs";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 import { OlympicPieChartComponent } from "~/components/olympic-pie-chart/olympic-pie-chart.component";
 import { Olympic } from "~/models/Olympic";
 import { OlympicService } from "~/services/olympic.service";
@@ -13,22 +14,20 @@ import { OlympicService } from "~/services/olympic.service";
 })
 export class HomeComponent implements OnInit {
 
-  public olympics$: Observable<Olympic[] | null> = of(null);
-
+  public olympics$!: Observable<Olympic[] | null>;
   private olympicService = inject(OlympicService);
 
   public countJOS = 0;
   public countCountries = 0;
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-
-    this.olympics$.pipe(
-      tap((olympics) => {
-        this.countJOS = new Set(olympics?.map(o => o.participations.map(p => p.year)).flat()).size || 0;
-        this.countCountries = new Set(olympics?.map((o) => o.country)).size || 0;
+    this.olympics$ = this.olympicService.getOlympics().pipe(
+      tap(olympics => {
+        if (olympics) {
+          this.countJOS = new Set(olympics.flatMap(o => o.participations.map(p => p.year))).size;
+          this.countCountries = olympics.length;
+        }
       })
-    ).subscribe();
+    );
   }
-
 }

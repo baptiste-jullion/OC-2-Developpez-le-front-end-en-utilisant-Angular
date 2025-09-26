@@ -1,5 +1,7 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { OlympicLineChartComponent } from "~/components/olympic-line-chart/olympic-line-chart.component";
 import { Olympic } from "~/models/Olympic";
 import { OlympicService } from "~/services/olympic.service";
@@ -9,7 +11,9 @@ import { OlympicService } from "~/services/olympic.service";
   templateUrl: "./details.component.html",
   imports: [OlympicLineChartComponent, RouterLink]
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   countryId: number;
   olympic: Olympic | null = null;
   entries = 0;
@@ -22,7 +26,12 @@ export class DetailsComponent {
 
   constructor() {
     this.countryId = Number(this.route.snapshot.paramMap.get("countryId") || -1);
-    this.olympicService.getOlympicById(this.countryId).subscribe((olympic) => {
+  }
+
+  ngOnInit(): void {
+    this.olympicService.getOlympicById(this.countryId).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((olympic) => {
       if (!olympic) {
         this.router.navigate(["/not-found"]);
         return;
@@ -32,5 +41,10 @@ export class DetailsComponent {
       this.totalMedals = olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0);
       this.totalAthletes = olympic.participations.reduce((acc, participation) => acc + participation.athleteCount, 0);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
