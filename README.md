@@ -1,29 +1,73 @@
-# OlympicGamesStarter
+# Application des Jeux Olympiques - TéléSport
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+Ce projet a été développé pour DelivWeb pour le client TéléSport. Il s'agit d'une application web interactive offrant un tableau de bord pour visualiser les données des précédents Jeux Olympiques.
 
-Don't forget to install your node_modules before starting (`npm install`).
+L'application permet aux utilisateurs de consulter le nombre de médailles par pays et d'explorer les détails pour chaque pays participant.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Fonctionnalités
 
-## Build
+- **Dashboard Principal :**
+  - Affiche des statistiques clés : nombre total de Jeux Olympiques couverts et nombre de pays participants.
+  - Un graphique interactif montrant le nombre total de médailles par pays.
+  - Au survol, le graphique affiche le détail des médailles pour un pays.
+  - Un clic sur un pays mène à sa page de détails.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Page de Détails par Pays :**
+  - Affiche des statistiques spécifiques au pays sélectionné : nombre de participations, total des médailles et nombre total d'athlètes.
+  - Un graphique montrant l'évolution du nombre de médailles obtenues à chaque participation.
+  - Un bouton pour revenir facilement au dashboard principal.
 
-## Where to start
+- **Design Responsive :** L'application est entièrement utilisable sur ordinateurs, tablettes et mobiles.
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+## Technologies utilisées
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+- **Framework :** Angular v20+
+- **Langages :** TypeScript, HTML, SCSS
+- **Librairies :**
+  - [RxJS](https://rxjs.dev/) pour la programmation réactive et la gestion des données asynchrones.
+  - [ApexCharts](https://apexcharts.com/) pour la visualisation des données (graphiques).
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+## Prérequis
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+- Node.js (version 20 ou supérieure recommandée)
+- npm
+- Angular CLI
 
-You're now ready to implement the requested features.
+## Installation et Lancement
 
-Good luck!
+Étapes pour lancer l'application en local :
+
+1.  **Cloner le dépôt Git :**
+    ```bash
+    git clone https://github.com/baptiste-jullion/OC-2-Developpez-le-front-end-en-utilisant-Angular.git
+    ```
+
+2.  **Accéder au répertoire du projet :**
+    ```bash
+    cd OC-2-Developpez-le-front-end-en-utilisant-Angular
+    ```
+
+3.  **Installer les dépendances :**
+    ```bash
+    npm install
+    ```
+
+4.  **Lancez le serveur de développement :**
+    ```bash
+    ng serve
+    ```
+
+5.  **Ouvrir l'application dans un navigateur :**
+    Se rendre à l'adresse [http://localhost:4200](http://localhost:4200).
+
+## Structure du Projet
+
+Le code source est organisé comme suit :
+
+- `src/app/core/` : Contient la logique métier principale.
+  - `components/` : Composants réutilisables (graphiques).
+  - `models/` : Interfaces TypeScript pour les modèles de données (`Olympic`, `Participation`).
+  - `services/` : Services pour la récupération des données (`olympic.service.ts`).
+- `src/app/pages/` : Contient les composants principaux de chaque page (`home`, `details`, `not-found`).
+- `src/assets/` : Contient les fichiers statiques, y compris le fichier `mock/olympic.json` utilisé comme source de données.
