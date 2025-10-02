@@ -30,16 +30,15 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.olympicService.getOlympicById(this.countryId).pipe(
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     ).subscribe((olympic) => {
-      if (!olympic) {
-        this.router.navigate(["/not-found"]);
-        return;
-      }
       this.olympic = olympic;
       this.entries = olympic.participations.length;
       this.totalMedals = olympic.participations.reduce((acc, participation) => acc + participation.medalsCount, 0);
       this.totalAthletes = olympic.participations.reduce((acc, participation) => acc + participation.athleteCount, 0);
+    }, (error) => {
+      console.error(error);
+      this.router.navigate(["/not-found"]);
     });
   }
 
